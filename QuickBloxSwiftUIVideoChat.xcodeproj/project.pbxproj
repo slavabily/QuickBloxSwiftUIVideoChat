@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,9 +13,13 @@
 		F9D6119D26E8F10B004DEAC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D6119C26E8F10B004DEAC2 /* Assets.xcassets */; };
 		F9D611A026E8F10B004DEAC2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D6119F26E8F10B004DEAC2 /* Preview Assets.xcassets */; };
 		F9D611A326E8F10B004DEAC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9D611A126E8F10B004DEAC2 /* LaunchScreen.storyboard */; };
+		FA9BEF5CAA4C84030AAB255A /* Pods_QuickBloxSwiftUIVideoChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B209207CEC3ADB785915B709 /* Pods_QuickBloxSwiftUIVideoChat.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		92C94CBFDAC5388312BF7136 /* Pods-QuickBloxSwiftUIVideoChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickBloxSwiftUIVideoChat.release.xcconfig"; path = "Target Support Files/Pods-QuickBloxSwiftUIVideoChat/Pods-QuickBloxSwiftUIVideoChat.release.xcconfig"; sourceTree = "<group>"; };
+		B209207CEC3ADB785915B709 /* Pods_QuickBloxSwiftUIVideoChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuickBloxSwiftUIVideoChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B41C647F0BAB49ED57954736 /* Pods-QuickBloxSwiftUIVideoChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickBloxSwiftUIVideoChat.debug.xcconfig"; path = "Target Support Files/Pods-QuickBloxSwiftUIVideoChat/Pods-QuickBloxSwiftUIVideoChat.debug.xcconfig"; sourceTree = "<group>"; };
 		F9D6119326E8F0FD004DEAC2 /* QuickBloxSwiftUIVideoChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickBloxSwiftUIVideoChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D6119626E8F0FD004DEAC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F9D6119826E8F0FD004DEAC2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -31,17 +35,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA9BEF5CAA4C84030AAB255A /* Pods_QuickBloxSwiftUIVideoChat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		475A3C7621F5CDB12A4E626B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B41C647F0BAB49ED57954736 /* Pods-QuickBloxSwiftUIVideoChat.debug.xcconfig */,
+				92C94CBFDAC5388312BF7136 /* Pods-QuickBloxSwiftUIVideoChat.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		8CD049AF1A6B846C0F027B77 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B209207CEC3ADB785915B709 /* Pods_QuickBloxSwiftUIVideoChat.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F9D6118A26E8F0FC004DEAC2 = {
 			isa = PBXGroup;
 			children = (
 				F9D6119526E8F0FD004DEAC2 /* QuickBloxSwiftUIVideoChat */,
 				F9D6119426E8F0FD004DEAC2 /* Products */,
+				475A3C7621F5CDB12A4E626B /* Pods */,
+				8CD049AF1A6B846C0F027B77 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -82,9 +106,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F9D611A726E8F10B004DEAC2 /* Build configuration list for PBXNativeTarget "QuickBloxSwiftUIVideoChat" */;
 			buildPhases = (
+				CBDD1A8D3ABE72C6495FE2DB /* [CP] Check Pods Manifest.lock */,
 				F9D6118F26E8F0FD004DEAC2 /* Sources */,
 				F9D6119026E8F0FD004DEAC2 /* Frameworks */,
 				F9D6119126E8F0FD004DEAC2 /* Resources */,
+				7860F546F8E2F767BEBA7B5E /* [CP] Embed Pods Frameworks */,
+				F9850A4326EA0474006453FD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -139,6 +166,65 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7860F546F8E2F767BEBA7B5E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QuickBloxSwiftUIVideoChat/Pods-QuickBloxSwiftUIVideoChat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QuickBloxSwiftUIVideoChat/Pods-QuickBloxSwiftUIVideoChat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-QuickBloxSwiftUIVideoChat/Pods-QuickBloxSwiftUIVideoChat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CBDD1A8D3ABE72C6495FE2DB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QuickBloxSwiftUIVideoChat-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F9850A4326EA0474006453FD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/QuickbloxWebRTC.framework/strip-framework.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F9D6118F26E8F0FD004DEAC2 /* Sources */ = {
@@ -283,6 +369,7 @@
 		};
 		F9D611A826E8F10B004DEAC2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B41C647F0BAB49ED57954736 /* Pods-QuickBloxSwiftUIVideoChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -304,6 +391,7 @@
 		};
 		F9D611A926E8F10B004DEAC2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 92C94CBFDAC5388312BF7136 /* Pods-QuickBloxSwiftUIVideoChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
