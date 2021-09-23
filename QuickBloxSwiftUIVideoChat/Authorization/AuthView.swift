@@ -24,9 +24,8 @@ struct AuthView: View {
     
     @State private var login = ""
     @State private var fullName = ""
-//    @State private var password = ""
-    
-    @State private var nextViewIsPresented = false
+    @State private var streamingViewIsPresented = false
+    @State         var user = QBUUser()
     
     var body: some View {
         NavigationView {
@@ -38,11 +37,8 @@ struct AuthView: View {
                     Section(header: Text("Full name")) {
                         TextField("", text: $fullName)
                     }
-//                    Section(header: Text("Password")) {
-//                        TextField("", text: $password)
-//                    }
                 }
-                NavigationLink(destination: Circle(), isActive: $nextViewIsPresented) {
+                NavigationLink(destination: StreamingViewRepresentable(user: $user), isActive: $streamingViewIsPresented) {
                     Button("Login") {
                         signUp(login: login, fullName: fullName)
                     }
@@ -79,40 +75,21 @@ struct AuthView: View {
     
     private func login(login: String, password: String = LoginConstants.defaultPassword) {
         
-        QBRequest.logIn(withUserLogin: login, password: password, successBlock: { (response, user) in
-            user.password = password
-            connectToChat(user: user)
+        QBRequest.logIn(withUserLogin: login, password: password, successBlock: { (response, loggedInUser) in
+            loggedInUser.password = password
+            
+            self.user = loggedInUser
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+                streamingViewIsPresented.toggle()
+            }
+            
         }, errorBlock: { (response) in
             self.handleError(response.error?.error, domain: ErrorDomain.logIn)
             if response.status == QBResponseStatusCode.unAuthorized {
                 // Clean profile
             } 
         })
-    }
-    
-    private func connectToChat(user: QBUUser) {
-        if QBChat.instance.isConnected == true {
-            //did Login action
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
-                nextViewIsPresented.toggle()
-            }
-        } else {
-            QBChat.instance.connect(withUserID: user.id, password: LoginConstants.defaultPassword) { error in
-                if let error = error {
-                    if error._code == QBResponseStatusCode.unAuthorized.rawValue {
-                        // Clean user profile
-                        debugPrint("Unauthorised access!")
-                    } else {
-                        debugPrint(LoginConstants.checkInternet)
-                        handleError(error, domain: ErrorDomain.logIn)
-                    }
-                } else {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
-                        nextViewIsPresented.toggle()
-                    }
-                }
-            }
-        }
     }
     
     // MARK: - Handle errors

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F9917F9F26F86B7C00EF4678 /* StreamingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9917F9E26F86B7C00EF4678 /* StreamingViewController.swift */; };
+		F9917FA126F86BC700EF4678 /* StreamingViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9917FA026F86BC700EF4678 /* StreamingViewRepresentable.swift */; };
 		F9D6119726E8F0FD004DEAC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6119626E8F0FD004DEAC2 /* AppDelegate.swift */; };
 		F9D6119926E8F0FD004DEAC2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6119826E8F0FD004DEAC2 /* SceneDelegate.swift */; };
 		F9D6119B26E8F0FD004DEAC2 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6119A26E8F0FD004DEAC2 /* AuthView.swift */; };
@@ -20,6 +22,8 @@
 		92C94CBFDAC5388312BF7136 /* Pods-QuickBloxSwiftUIVideoChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickBloxSwiftUIVideoChat.release.xcconfig"; path = "Target Support Files/Pods-QuickBloxSwiftUIVideoChat/Pods-QuickBloxSwiftUIVideoChat.release.xcconfig"; sourceTree = "<group>"; };
 		B209207CEC3ADB785915B709 /* Pods_QuickBloxSwiftUIVideoChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuickBloxSwiftUIVideoChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B41C647F0BAB49ED57954736 /* Pods-QuickBloxSwiftUIVideoChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickBloxSwiftUIVideoChat.debug.xcconfig"; path = "Target Support Files/Pods-QuickBloxSwiftUIVideoChat/Pods-QuickBloxSwiftUIVideoChat.debug.xcconfig"; sourceTree = "<group>"; };
+		F9917F9E26F86B7C00EF4678 /* StreamingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingViewController.swift; sourceTree = "<group>"; };
+		F9917FA026F86BC700EF4678 /* StreamingViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingViewRepresentable.swift; sourceTree = "<group>"; };
 		F9D6119326E8F0FD004DEAC2 /* QuickBloxSwiftUIVideoChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickBloxSwiftUIVideoChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D6119626E8F0FD004DEAC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F9D6119826E8F0FD004DEAC2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +63,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F9917FA226F87B2400EF4678 /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				F9D6119A26E8F0FD004DEAC2 /* AuthView.swift */,
+			);
+			path = Authorization;
+			sourceTree = "<group>";
+		};
+		F9917FA326F87B7800EF4678 /* Streaming */ = {
+			isa = PBXGroup;
+			children = (
+				F9917F9E26F86B7C00EF4678 /* StreamingViewController.swift */,
+				F9917FA026F86BC700EF4678 /* StreamingViewRepresentable.swift */,
+			);
+			path = Streaming;
+			sourceTree = "<group>";
+		};
 		F9D6118A26E8F0FC004DEAC2 = {
 			isa = PBXGroup;
 			children = (
@@ -82,7 +103,8 @@
 			children = (
 				F9D6119626E8F0FD004DEAC2 /* AppDelegate.swift */,
 				F9D6119826E8F0FD004DEAC2 /* SceneDelegate.swift */,
-				F9D6119A26E8F0FD004DEAC2 /* AuthView.swift */,
+				F9917FA226F87B2400EF4678 /* Authorization */,
+				F9917FA326F87B7800EF4678 /* Streaming */,
 				F9D6119C26E8F10B004DEAC2 /* Assets.xcassets */,
 				F9D611A126E8F10B004DEAC2 /* LaunchScreen.storyboard */,
 				F9D611A426E8F10B004DEAC2 /* Info.plist */,
@@ -232,8 +254,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9D6119726E8F0FD004DEAC2 /* AppDelegate.swift in Sources */,
+				F9917F9F26F86B7C00EF4678 /* StreamingViewController.swift in Sources */,
 				F9D6119926E8F0FD004DEAC2 /* SceneDelegate.swift in Sources */,
 				F9D6119B26E8F0FD004DEAC2 /* AuthView.swift in Sources */,
+				F9917FA126F86BC700EF4678 /* StreamingViewRepresentable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
