@@ -9,17 +9,17 @@ import SwiftUI
 import UIKit
 import Quickblox
 
-struct StreamingViewRepresentable: UIViewControllerRepresentable {
+struct CallViewRepresentable: UIViewControllerRepresentable {
     
     @Binding var user: QBUUser
     
-    func makeUIViewController(context: Context) -> StreamingViewController {
-        let streamingViewController = StreamingViewController(user: user)
+    func makeUIViewController(context: Context) -> CallViewController {
+        let streamingViewController = CallViewController(user: user)
         
         return streamingViewController
     }
     
-    func updateUIViewController(_ streamingViewController: StreamingViewController, context: Context) {
+    func updateUIViewController(_ streamingViewController: CallViewController, context: Context) {
         
         streamingViewController.viewWillAppear(true)
     }

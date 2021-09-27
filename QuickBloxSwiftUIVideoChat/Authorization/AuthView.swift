@@ -24,8 +24,8 @@ struct AuthView: View {
     
     @State private var login = ""
     @State private var fullName = ""
-    @State private var streamingViewIsPresented = false
-    @State         var user = QBUUser()
+    @State private var opponentsViewIsPresented = false
+    @State private var user = QBUUser()
     
     var body: some View {
         NavigationView {
@@ -38,9 +38,9 @@ struct AuthView: View {
                         TextField("", text: $fullName)
                     }
                 }
-                NavigationLink(destination: StreamingViewRepresentable(user: $user), isActive: $streamingViewIsPresented) {
+                NavigationLink(destination: OpponentsView(user: $user), isActive: $opponentsViewIsPresented) {
                     Button("Login") {
-                        signUp(login: login, fullName: fullName)
+                        signUp(fullName: fullName, login: login)
                     }
                     .font(.headline)
                     .padding()
@@ -55,33 +55,35 @@ struct AuthView: View {
         }
     }
     
-    private func signUp(login: String, fullName: String) {
-        let user = QBUUser()
-        user.login = login
-        user.fullName = fullName
-        user.password = LoginConstants.defaultPassword
-
-        QBRequest.signUp(user, successBlock: { response, user in
-            self.login(login: login)
-        }, errorBlock: { (response) in
+    private func signUp(fullName: String, login: String) {
+        let newUser = QBUUser()
+        newUser.login = login
+        newUser.fullName = fullName
+        newUser.password = LoginConstants.defaultPassword
+        
+        QBRequest.signUp(newUser) { response, user in
+            self.login(fullName: fullName, login: login)
+        } errorBlock: { response  in
             if response.status == QBResponseStatusCode.validationFailed {
                 // The user with existent login was created earlier
-                self.login(login: login)
+                self.login(fullName: fullName, login: login)
                 return
             }
             self.handleError(response.error?.error, domain: ErrorDomain.signUp)
-        })
+        }
     }
     
-    private func login(login: String, password: String = LoginConstants.defaultPassword) {
+    private func login(fullName: String, login: String, password: String = LoginConstants.defaultPassword) {
         
         QBRequest.logIn(withUserLogin: login, password: password, successBlock: { (response, loggedInUser) in
             loggedInUser.password = password
             
-            self.user = loggedInUser
+            Profile.synchronize(user)
             
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
-                streamingViewIsPresented.toggle()
+            if user.fullName != fullName {
+                self.updateFullName(fullName: fullName, login: login)
+            } else {
+                self.connectToChat(user: user)
             }
             
         }, errorBlock: { (response) in
@@ -90,6 +92,49 @@ struct AuthView: View {
                 // Clean profile
             } 
         })
+    }
+    
+    private func updateFullName(fullName: String, login: String) {
+        let updateUserParameter = QBUpdateUserParameters()
+        updateUserParameter.fullName = fullName
+        QBRequest.updateCurrentUser(updateUserParameter, successBlock: { response, user in
+             
+            Profile.update(user)
+            self.connectToChat(user: user)
+            
+            }, errorBlock: { response in
+                self.handleError(response.error?.error, domain: ErrorDomain.signUp)
+        })
+    }
+    
+    private func connectToChat(user: QBUUser) {
+         
+        if QBChat.instance.isConnected == true {
+            //did Login action
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+                opponentsViewIsPresented.toggle()
+            }
+        } else {
+            QBChat.instance.connect(withUserID: user.id,
+                                    password: LoginConstants.defaultPassword,
+                                    completion: { error in
+                                         
+                                        if let error = error {
+                                            if error._code == QBResponseStatusCode.unAuthorized.rawValue {
+                                                // Clean profile
+                                                Profile.clearProfile()
+                                            } else {
+                                                debugPrint(LoginConstants.checkInternet)
+                                                self.handleError(error, domain: ErrorDomain.logIn)
+                                            }
+                                        } else {
+                                            //did Login action
+                                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+                                                opponentsViewIsPresented.toggle()
+                                            }
+                                        }
+                                    })
+        }
     }
     
     // MARK: - Handle errors

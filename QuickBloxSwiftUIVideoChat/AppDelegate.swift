@@ -39,6 +39,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+    // MARK: Managing chat connections
+    
+        func applicationWillTerminate(_ application: UIApplication) {
+            QBChat.instance.disconnect { (error) in
+            }
+        }
+        func applicationDidEnterBackground(_ application: UIApplication) {
+            QBChat.instance.disconnect { (error) in
+            }
+        }
+        func applicationWillEnterForeground(_ application: UIApplication) {
+//            QBChat.instance.connect(withUserID: currentUser.ID, password: currentUser.password) { (error) in
+//            }
+        }
+         
 
     // MARK: UISceneSession Lifecycle
 
