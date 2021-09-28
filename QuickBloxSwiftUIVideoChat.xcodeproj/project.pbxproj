@@ -16,8 +16,11 @@
 		F9D611A026E8F10B004DEAC2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D6119F26E8F10B004DEAC2 /* Preview Assets.xcassets */; };
 		F9D611A326E8F10B004DEAC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9D611A126E8F10B004DEAC2 /* LaunchScreen.storyboard */; };
 		F9D85AF62700479E00C7E7A8 /* OpponentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D85AF52700479E00C7E7A8 /* OpponentsView.swift */; };
-		F9D85AF82700F96900C7E7A8 /* UserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D85AF72700F96900C7E7A8 /* UserDataSource.swift */; };
+		F9D85AF82700F96900C7E7A8 /* UsersSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D85AF72700F96900C7E7A8 /* UsersSelection.swift */; };
 		F9D85AFA2701EAE300C7E7A8 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D85AF92701EAE300C7E7A8 /* Profile.swift */; };
+		F9D85AFC27030BA000C7E7A8 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D85AFB27030BA000C7E7A8 /* UserCell.swift */; };
+		F9D85AFE270318A300C7E7A8 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D85AFD270318A300C7E7A8 /* ChatManager.swift */; };
+		F9D85B00270335FD00C7E7A8 /* String+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D85AFF270335FD00C7E7A8 /* String+Extention.swift */; };
 		FA9BEF5CAA4C84030AAB255A /* Pods_QuickBloxSwiftUIVideoChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B209207CEC3ADB785915B709 /* Pods_QuickBloxSwiftUIVideoChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,8 +39,11 @@
 		F9D611A226E8F10B004DEAC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F9D611A426E8F10B004DEAC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9D85AF52700479E00C7E7A8 /* OpponentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpponentsView.swift; sourceTree = "<group>"; };
-		F9D85AF72700F96900C7E7A8 /* UserDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataSource.swift; sourceTree = "<group>"; };
+		F9D85AF72700F96900C7E7A8 /* UsersSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersSelection.swift; sourceTree = "<group>"; };
 		F9D85AF92701EAE300C7E7A8 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		F9D85AFB27030BA000C7E7A8 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		F9D85AFD270318A300C7E7A8 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
+		F9D85AFF270335FD00C7E7A8 /* String+Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extention.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,8 @@
 				F9D85AF42700473C00C7E7A8 /* OpponentsSelection */,
 				F9917FA326F87B7800EF4678 /* Streaming */,
 				F9D85AF92701EAE300C7E7A8 /* Profile.swift */,
+				F9D85AFF270335FD00C7E7A8 /* String+Extention.swift */,
+				F9D85AFD270318A300C7E7A8 /* ChatManager.swift */,
 				F9D6119C26E8F10B004DEAC2 /* Assets.xcassets */,
 				F9D611A126E8F10B004DEAC2 /* LaunchScreen.storyboard */,
 				F9D611A426E8F10B004DEAC2 /* Info.plist */,
@@ -133,7 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				F9D85AF52700479E00C7E7A8 /* OpponentsView.swift */,
-				F9D85AF72700F96900C7E7A8 /* UserDataSource.swift */,
+				F9D85AF72700F96900C7E7A8 /* UsersSelection.swift */,
+				F9D85AFB27030BA000C7E7A8 /* UserCell.swift */,
 			);
 			path = OpponentsSelection;
 			sourceTree = "<group>";
@@ -271,11 +280,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9D6119726E8F0FD004DEAC2 /* AppDelegate.swift in Sources */,
+				F9D85B00270335FD00C7E7A8 /* String+Extention.swift in Sources */,
 				F9D85AFA2701EAE300C7E7A8 /* Profile.swift in Sources */,
 				F9917F9F26F86B7C00EF4678 /* CallViewController.swift in Sources */,
 				F9D6119926E8F0FD004DEAC2 /* SceneDelegate.swift in Sources */,
 				F9D6119B26E8F0FD004DEAC2 /* AuthView.swift in Sources */,
-				F9D85AF82700F96900C7E7A8 /* UserDataSource.swift in Sources */,
+				F9D85AFE270318A300C7E7A8 /* ChatManager.swift in Sources */,
+				F9D85AFC27030BA000C7E7A8 /* UserCell.swift in Sources */,
+				F9D85AF82700F96900C7E7A8 /* UsersSelection.swift in Sources */,
 				F9917FA126F86BC700EF4678 /* CallViewRepresentable.swift in Sources */,
 				F9D85AF62700479E00C7E7A8 /* OpponentsView.swift in Sources */,
 			);

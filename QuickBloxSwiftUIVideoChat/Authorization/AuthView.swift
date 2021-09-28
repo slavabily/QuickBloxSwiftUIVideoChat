@@ -38,7 +38,7 @@ struct AuthView: View {
                         TextField("", text: $fullName)
                     }
                 }
-                NavigationLink(destination: OpponentsView(user: $user), isActive: $opponentsViewIsPresented) {
+                NavigationLink(destination: OpponentsView(), isActive: $opponentsViewIsPresented) {
                     Button("Login") {
                         signUp(fullName: fullName, login: login)
                     }
