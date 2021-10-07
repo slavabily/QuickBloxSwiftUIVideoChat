@@ -78,18 +78,19 @@ struct AuthView: View {
         QBRequest.logIn(withUserLogin: login, password: password, successBlock: { (response, loggedInUser) in
             loggedInUser.password = password
             
-            Profile.synchronize(user)
+            Profile.synchronize(loggedInUser)
             
-            if user.fullName != fullName {
+            if loggedInUser.fullName != fullName {
                 self.updateFullName(fullName: fullName, login: login)
             } else {
-                self.connectToChat(user: user)
+                self.connectToChat(user: loggedInUser)
             }
             
         }, errorBlock: { (response) in
             self.handleError(response.error?.error, domain: ErrorDomain.logIn)
             if response.status == QBResponseStatusCode.unAuthorized {
                 // Clean profile
+                Profile.clearProfile()
             } 
         })
     }
