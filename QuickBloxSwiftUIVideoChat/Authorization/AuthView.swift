@@ -61,16 +61,16 @@ struct AuthView: View {
         newUser.fullName = fullName
         newUser.password = LoginConstants.defaultPassword
         
-        QBRequest.signUp(newUser) { response, user in
-            self.login(fullName: fullName, login: login)
-        } errorBlock: { response  in
+        QBRequest.signUp(newUser, successBlock: { response, user in
+            self.login(fullName: user.fullName!, login: user.login!)
+        }, errorBlock: { response  in
             if response.status == QBResponseStatusCode.validationFailed {
                 // The user with existent login was created earlier
                 self.login(fullName: fullName, login: login)
                 return
             }
             self.handleError(response.error?.error, domain: ErrorDomain.signUp)
-        }
+        })
     }
     
     private func login(fullName: String, login: String, password: String = LoginConstants.defaultPassword) {
@@ -109,7 +109,7 @@ struct AuthView: View {
     }
     
     private func connectToChat(user: QBUUser) {
-         
+
         if QBChat.instance.isConnected == true {
             //did Login action
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
@@ -119,22 +119,21 @@ struct AuthView: View {
             QBChat.instance.connect(withUserID: user.id,
                                     password: LoginConstants.defaultPassword,
                                     completion: { error in
-                                         
-                                        if let error = error {
-                                            if error._code == QBResponseStatusCode.unAuthorized.rawValue {
-                                                // Clean profile
-                                                Profile.clearProfile()
-                                            } else {
-                                                debugPrint(LoginConstants.checkInternet)
-                                                self.handleError(error, domain: ErrorDomain.logIn)
-                                            }
-                                        } else {
-                                            //did Login action
-                                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
-                                                opponentsViewIsPresented.toggle()
-                                            }
-                                        }
-                                    })
+                if let error = error {
+                    if error._code == QBResponseStatusCode.unAuthorized.rawValue {
+                        // Clean profile
+                        Profile.clearProfile()
+                    } else {
+                        debugPrint(LoginConstants.checkInternet)
+                        self.handleError(error, domain: ErrorDomain.logIn)
+                    }
+                } else {
+                    //did Login action
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+                        opponentsViewIsPresented.toggle()
+                    }
+                }
+            })
         }
     }
     

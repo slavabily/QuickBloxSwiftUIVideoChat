@@ -16,6 +16,8 @@ struct CreateNewDialogConstant {
 
 struct OpponentsView: View {
     
+    @Environment(\.presentationMode) var presentationMode
+    
     @StateObject var usersSelection = UsersSelection()
     @State private var users : [QBUUser] = []
     @State private var downloadedUsers : [QBUUser] = []
@@ -42,6 +44,21 @@ struct OpponentsView: View {
                     usersSelection.selection(of: user)
                 }
         }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading:
+                                Button(action: {
+                                    disconnectUser()
+                                }, label: {
+                                    Image("exit")
+                                }),
+                            trailing: HStack(spacing: 30) {
+                                Button {
+                                    // TODO: navigation to info view
+                                } label: {
+                                    Image(systemName: "info.circle")
+                                        .scaleEffect(1.5)
+                                }
+                            })
         .navigationBarTitle("Select opponent", displayMode: .inline)
         .onAppear {
             fetchUsers()
@@ -75,6 +92,32 @@ struct OpponentsView: View {
                 }
             }
         }
+    }
+    
+    //MARK: - logOut flow
+    private func disconnectUser() {
+        QBChat.instance.disconnect(completionBlock: { error in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+                return
+            }
+            self.logOut()
+        })
+    }
+    
+    private func logOut() {
+        QBRequest.logOut(successBlock: { response in
+            //ClearProfile
+            Profile.clearProfile()
+//            self.chatManager.storage.clear()
+//            CacheManager.shared.clearCache()
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+                presentationMode.wrappedValue.dismiss()
+            }
+             
+        }, errorBlock: { response in
+            debugPrint("[DialogsViewController] logOut error: \(response)")
+        })
     }
 }
 

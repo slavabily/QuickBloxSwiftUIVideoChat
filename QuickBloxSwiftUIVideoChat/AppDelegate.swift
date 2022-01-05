@@ -36,6 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         QBSettings.disableFileLogging()
         QBSettings.autoReconnectEnabled = true
         
+        QBRTCConfig.setLogLevel(QBRTCLogLevel.verbose)
+        
         
         return true
     }
