@@ -11,7 +11,7 @@ import Quickblox
 
 struct CallViewRepresentable: UIViewControllerRepresentable {
     
-    @Binding var user: QBUUser
+    var user: QBUUser
     
     func makeUIViewController(context: Context) -> CallViewController {
         let streamingViewController = CallViewController(user: user)

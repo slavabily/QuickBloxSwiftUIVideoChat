@@ -39,10 +39,9 @@ struct OpponentsView: View {
     
     var body: some View {
         List(users_, id: \.self) { user in
-            UserCell(usersSelection: usersSelection, user: user)
-                .onTapGesture {
-                    usersSelection.selection(of: user)
-                }
+            NavigationLink(destination: CallViewRepresentable(user: user)) {
+                UserCell(usersSelection: usersSelection, user: user)
+            }
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading:
@@ -109,12 +108,9 @@ struct OpponentsView: View {
         QBRequest.logOut(successBlock: { response in
             //ClearProfile
             Profile.clearProfile()
-//            self.chatManager.storage.clear()
-//            CacheManager.shared.clearCache()
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
                 presentationMode.wrappedValue.dismiss()
             }
-             
         }, errorBlock: { response in
             debugPrint("[DialogsViewController] logOut error: \(response)")
         })

@@ -37,10 +37,9 @@ class ChatManager: NSObject {
             errorMessage = "SA_STR_NETWORK_ERROR".localized
         } else {
             guard let qberror = response.error,
-                let error = qberror.error else {
-                    return nil
-            }
-            
+                  let error = qberror.error else {
+                      return nil
+                  }
             errorMessage = error.localizedDescription.replacingOccurrences(of: "(",
                                                                            with: "",
                                                                            options:.caseInsensitive,
