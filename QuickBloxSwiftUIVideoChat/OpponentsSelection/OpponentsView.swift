@@ -39,7 +39,7 @@ struct OpponentsView: View {
     
     var body: some View {
         List(users_, id: \.self) { user in
-            NavigationLink(destination: CallViewRepresentable(user: user)) {
+            NavigationLink(destination: CallViewRepresentable(opponent: user)) {
                 UserCell(usersSelection: usersSelection, user: user)
             }
         }

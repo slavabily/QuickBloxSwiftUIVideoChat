@@ -11,10 +11,10 @@ import Quickblox
 
 struct CallViewRepresentable: UIViewControllerRepresentable {
     
-    var user: QBUUser
+    var opponent: QBUUser
     
     func makeUIViewController(context: Context) -> CallViewController {
-        let streamingViewController = CallViewController(user: user)
+        let streamingViewController = CallViewController(user: opponent)
         
         return streamingViewController
     }

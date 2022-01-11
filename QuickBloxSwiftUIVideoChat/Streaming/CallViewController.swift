@@ -12,6 +12,7 @@ import QuickbloxWebRTC
 class CallViewController: UIViewController {
     
     var user: QBUUser
+    var session: QBRTCSession?
     
     init(user: QBUUser) {
         self.user = user
@@ -27,6 +28,7 @@ class CallViewController: UIViewController {
         
         QBChat.instance.addDelegate(self)
         QBRTCClient.instance().add(self as QBRTCClientDelegate)
+        QBRTCClient.initializeRTC()
         
         connectToChat(user: user)
     }
@@ -40,7 +42,10 @@ class CallViewController: UIViewController {
                     debugPrint(LoginConstants.checkInternet)
                 }
             }
-            QBRTCClient.initializeRTC()
+            let opponentsIDs = [user.id]
+            let newSession = QBRTCClient.instance().createNewSession(withOpponents: opponentsIDs as [NSNumber], with: .video)
+            newSession.startCall(nil)
+            print("The Call session has been started...")
         }
     }
 }
@@ -50,9 +55,20 @@ class CallViewController: UIViewController {
 extension CallViewController: QBRTCClientDelegate {
     // MARK: QBRTCClientDelegate
     func didReceiveNewSession(_ session: QBRTCSession, userInfo: [String : String]? = nil) {
+        if self.session != nil {
+               // we already have a video/audio call session, so we reject another one
+               // userInfo - the custom user information dictionary for the call from caller. May be nil.
+               let userInfo = ["key":"value"] // optional
+               session.rejectCall(userInfo)
+               return
+           }
+           // saving session instance here
+           self.session = session
+        print("The outside call session has been received...")
     }
     
     func session(_ session: QBRTCSession, userDidNotRespond userID: NSNumber) {
+        print("The user didn't respond to call...")
     }
     
     func session(_ session: QBRTCSession, rejectedByUser userID: NSNumber, userInfo: [String : String]? = nil) {
