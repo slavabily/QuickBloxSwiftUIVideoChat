@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B96C4B66278F5D5C004F1DF9 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B96C4B65278F5D5C004F1DF9 /* Storyboard.storyboard */; };
 		F9917F9F26F86B7C00EF4678 /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9917F9E26F86B7C00EF4678 /* CallViewController.swift */; };
 		F9917FA126F86BC700EF4678 /* CallViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9917FA026F86BC700EF4678 /* CallViewRepresentable.swift */; };
 		F9D6119726E8F0FD004DEAC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6119626E8F0FD004DEAC2 /* AppDelegate.swift */; };
@@ -28,6 +29,7 @@
 		92C94CBFDAC5388312BF7136 /* Pods-QuickBloxSwiftUIVideoChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickBloxSwiftUIVideoChat.release.xcconfig"; path = "Target Support Files/Pods-QuickBloxSwiftUIVideoChat/Pods-QuickBloxSwiftUIVideoChat.release.xcconfig"; sourceTree = "<group>"; };
 		B209207CEC3ADB785915B709 /* Pods_QuickBloxSwiftUIVideoChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuickBloxSwiftUIVideoChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B41C647F0BAB49ED57954736 /* Pods-QuickBloxSwiftUIVideoChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickBloxSwiftUIVideoChat.debug.xcconfig"; path = "Target Support Files/Pods-QuickBloxSwiftUIVideoChat/Pods-QuickBloxSwiftUIVideoChat.debug.xcconfig"; sourceTree = "<group>"; };
+		B96C4B65278F5D5C004F1DF9 /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		F9917F9E26F86B7C00EF4678 /* CallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
 		F9917FA026F86BC700EF4678 /* CallViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewRepresentable.swift; sourceTree = "<group>"; };
 		F9D6119326E8F0FD004DEAC2 /* QuickBloxSwiftUIVideoChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickBloxSwiftUIVideoChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,8 +88,9 @@
 		F9917FA326F87B7800EF4678 /* Streaming */ = {
 			isa = PBXGroup;
 			children = (
-				F9917F9E26F86B7C00EF4678 /* CallViewController.swift */,
 				F9917FA026F86BC700EF4678 /* CallViewRepresentable.swift */,
+				F9917F9E26F86B7C00EF4678 /* CallViewController.swift */,
+				B96C4B65278F5D5C004F1DF9 /* Storyboard.storyboard */,
 			);
 			path = Streaming;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9D611A326E8F10B004DEAC2 /* LaunchScreen.storyboard in Resources */,
+				B96C4B66278F5D5C004F1DF9 /* Storyboard.storyboard in Resources */,
 				F9D611A026E8F10B004DEAC2 /* Preview Assets.xcassets in Resources */,
 				F9D6119D26E8F10B004DEAC2 /* Assets.xcassets in Resources */,
 			);

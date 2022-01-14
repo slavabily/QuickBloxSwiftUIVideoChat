@@ -14,14 +14,15 @@ struct CallViewRepresentable: UIViewControllerRepresentable {
     var opponent: QBUUser
     
     func makeUIViewController(context: Context) -> CallViewController {
-        let streamingViewController = CallViewController(user: opponent)
+        let storyboard = UIStoryboard(name: "Storyboard", bundle: nil)
+        let callVC = storyboard.instantiateViewController(withIdentifier: "CallViewController") as! CallViewController
+        callVC.user = opponent
         
-        return streamingViewController
+        return callVC
     }
     
-    func updateUIViewController(_ streamingViewController: CallViewController, context: Context) {
+    func updateUIViewController(_ callVC: CallViewController, context: Context) {
         
-        streamingViewController.viewWillAppear(true)
     }
 }
 
