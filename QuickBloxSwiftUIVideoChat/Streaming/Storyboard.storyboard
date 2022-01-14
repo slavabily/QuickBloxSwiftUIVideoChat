@@ -17,6 +17,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DH9-fp-7u4" customClass="QBRTCRemoteVideoView" customModule="QuickBloxSwiftUIVideoChat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="96l-gg-Ezl">
                                 <rect key="frame" x="154" y="516" width="240" height="346"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -33,6 +38,7 @@
                     </view>
                     <connections>
                         <outlet property="localVideoView" destination="96l-gg-Ezl" id="Eor-lH-dto"/>
+                        <outlet property="opponentVideoView" destination="DH9-fp-7u4" id="sgn-4a-GOr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

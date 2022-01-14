@@ -13,6 +13,7 @@ import QuickbloxWebRTC
 class CallViewController: UIViewController {
     
     @IBOutlet weak var localVideoView: UIView! // your video view to render local camera video stream
+    @IBOutlet weak var opponentVideoView: QBRTCRemoteVideoView! // your opponent's video view to render remote video stream
     
     var videoCapture: QBRTCCameraCapture?
     var session: QBRTCSession?
@@ -146,6 +147,14 @@ extension CallViewController: QBRTCClientDelegate {
     }
     
     func session(_ session: QBRTCBaseSession, receivedRemoteVideoTrack videoTrack: QBRTCVideoTrack, fromUser userID: NSNumber) {
+        print("Receiving video track from remote user...")
+        // we suppose you have created UIView and set it's class to RemoteVideoView class
+        // also we suggest you to set view mode to UIViewContentModeScaleAspectFit or
+        // UIViewContentModeScaleAspectFill
+        
+        let remoteVideoTrack = self.session?.remoteVideoTrack(withUserID: userID) // video track for remote user
+        
+        self.opponentVideoView.setVideoTrack(remoteVideoTrack!)
     }
     
     func session(_ session: QBRTCBaseSession, connectionClosedForUser userID: NSNumber) {
