@@ -5,19 +5,37 @@
 //  Created by slava bily on 20.09.2021.
 //
 
-import UIKit
 import Foundation
 import Quickblox
 import QuickbloxWebRTC
 
 class CallViewController: UIViewController {
     
-    @IBOutlet weak var localVideoView: UIView! // your video view to render local camera video stream
-    @IBOutlet weak var opponentVideoView: QBRTCRemoteVideoView! // your opponent's video view to render remote video stream
+    var localVideoView: UIView! // your video view to render local camera video stream
+    var opponentVideoView: QBRTCRemoteVideoView! // your opponent's video view to render remote video stream
+    var callButton: UIButton!
     
     var videoCapture: QBRTCCameraCapture?
     var session: QBRTCSession?
-    var user: QBUUser?
+    var user: QBUUser
+    
+    init(localVideoView: UIView, opponentVideoView: QBRTCRemoteVideoView, callButton: UIButton, user: QBUUser) {
+        self.localVideoView = localVideoView
+        self.opponentVideoView = opponentVideoView
+        self.callButton = callButton
+        self.user = user
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func call(_ sender: UIButton) {
+        // start call
+        startCall(to: user)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +43,39 @@ class CallViewController: UIViewController {
         QBChat.instance.addDelegate(self)
         QBRTCClient.instance().add(self as QBRTCClientDelegate)
         QBRTCClient.initializeRTC()
+        
+        // View's initialization
+        
+        opponentVideoView = QBRTCRemoteVideoView()
+        view.addSubview(opponentVideoView)
+        
+        localVideoView = UIView()
+        localVideoView.backgroundColor = .cyan
+        opponentVideoView.addSubview(localVideoView)
+        
+        callButton = UIButton()
+        callButton.setTitle("Call", for: .normal)
+        callButton.setTitleColor(UIColor.white, for: .normal)
+        callButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        opponentVideoView.addSubview(callButton)
+        
+        opponentVideoView.translatesAutoresizingMaskIntoConstraints = false
+        opponentVideoView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        opponentVideoView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        opponentVideoView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        opponentVideoView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        
+        localVideoView.translatesAutoresizingMaskIntoConstraints = false
+        localVideoView.bottomAnchor.constraint(equalTo: opponentVideoView.bottomAnchor).isActive = true
+        localVideoView.trailingAnchor.constraint(equalTo: opponentVideoView.trailingAnchor).isActive = true
+        localVideoView.widthAnchor.constraint(equalTo: opponentVideoView.widthAnchor, multiplier: 0.4).isActive = true
+        localVideoView.heightAnchor.constraint(equalTo: opponentVideoView.heightAnchor, multiplier: 0.3).isActive = true
+        
+        callButton.translatesAutoresizingMaskIntoConstraints = false
+        callButton.leadingAnchor.constraint(equalTo: opponentVideoView.leadingAnchor).isActive = true
+        callButton.bottomAnchor.constraint(equalTo: opponentVideoView.bottomAnchor).isActive = true
+        callButton.widthAnchor.constraint(equalTo: opponentVideoView.widthAnchor, multiplier: 0.4).isActive = true
+        callButton.heightAnchor.constraint(equalTo: opponentVideoView.heightAnchor, multiplier: 0.2).isActive = true
         
         let videoFormat = QBRTCVideoFormat()
         videoFormat.frameRate = 30
@@ -47,17 +98,15 @@ class CallViewController: UIViewController {
                 } else {
                     print("Camera access is NOT granted!")
                 }
-            }
+        }
         
         self.videoCapture?.startSession()
         
         self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, at: 0)
-                
-                // start call
-        startCall(to: user!)
     }
     
     func startCall(to user: QBUUser) {
+        callButton.isHidden = true
         QBChat.instance.connect(withUserID: user.id, password: LoginConstants.defaultPassword, completion: { error in
             if let error = error {
                 if error._code == QBResponseStatusCode.unAuthorized.rawValue {
@@ -69,7 +118,7 @@ class CallViewController: UIViewController {
             let opponentsIDs = [user.id]
             let newSession = QBRTCClient.instance().createNewSession(withOpponents: opponentsIDs as [NSNumber], with: .video)
             newSession.startCall(nil)
-            print("The Call session has been started...")
+            print("The Call session with opponent \(opponentsIDs) has been started...")
         })
     }
     
@@ -96,8 +145,6 @@ class CallViewController: UIViewController {
         // and release session instance
         self.session = nil
     }
-    
-    
 }
 
 // MARK: QBRTCClientDelegate
@@ -115,6 +162,8 @@ extension CallViewController: QBRTCClientDelegate {
         // saving session instance here
         self.session = session
         print("The outside call session has been received...")
+        // accept call
+        acceptACall()
     }
     
     func session(_ session: QBRTCSession, userDidNotRespond userID: NSNumber) {
@@ -122,15 +171,15 @@ extension CallViewController: QBRTCClientDelegate {
     }
     
     func session(_ session: QBRTCSession, rejectedByUser userID: NSNumber, userInfo: [String : String]? = nil) {
-        print("Rejected by user \(userID)")
+        print("Rejected by user...: \(userID)")
     }
     
     func session(_ session: QBRTCSession, acceptedByUser userID: NSNumber, userInfo: [String : String]? = nil) {
-        print("Accepted by user: \(userID)")
+        print("Accepted by user...: \(userID)")
     }
     
     func session(_ session: QBRTCSession, hungUpByUser userID: NSNumber, userInfo: [String : String]? = nil) {
-        print("Hang up by user: \(userID)")
+        print("Hang up by user...: \(userID)")
     }
     
     func sessionDidClose(_ session: QBRTCSession) {
@@ -147,7 +196,7 @@ extension CallViewController: QBRTCClientDelegate {
     }
     
     func session(_ session: QBRTCBaseSession, receivedRemoteVideoTrack videoTrack: QBRTCVideoTrack, fromUser userID: NSNumber) {
-        print("Receiving video track from remote user...")
+        print("Receiving video track from opponent \(userID)...")
         // we suppose you have created UIView and set it's class to RemoteVideoView class
         // also we suggest you to set view mode to UIViewContentModeScaleAspectFit or
         // UIViewContentModeScaleAspectFill

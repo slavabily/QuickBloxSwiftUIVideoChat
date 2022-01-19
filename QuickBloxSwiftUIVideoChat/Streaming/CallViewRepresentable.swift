@@ -8,15 +8,17 @@
 import SwiftUI
 import UIKit
 import Quickblox
+import QuickbloxWebRTC
 
 struct CallViewRepresentable: UIViewControllerRepresentable {
     
     var opponent: QBUUser
     
     func makeUIViewController(context: Context) -> CallViewController {
-        let storyboard = UIStoryboard(name: "Storyboard", bundle: nil)
-        let callVC = storyboard.instantiateViewController(withIdentifier: "CallViewController") as! CallViewController
-        callVC.user = opponent
+        let callVC = CallViewController(localVideoView: UIView(),
+                                        opponentVideoView: QBRTCRemoteVideoView(),
+                                        callButton: UIButton(),
+                                        user: opponent)
         
         return callVC
     }
