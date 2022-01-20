@@ -11,13 +11,19 @@ import QuickbloxWebRTC
 
 class CallViewController: UIViewController {
     
-    var localVideoView: UIView! // your video view to render local camera video stream
-    var opponentVideoView: QBRTCRemoteVideoView! // your opponent's video view to render remote video stream
+    var localVideoView: UIView! // video view to render local camera video stream
+    var opponentVideoView: QBRTCRemoteVideoView! // opponent's video view to render remote video stream
     var callButton: UIButton!
     
     var videoCapture: QBRTCCameraCapture?
     var session: QBRTCSession?
     var user: QBUUser
+    
+    var isCalling: Bool = false {
+        didSet {
+           startCall(to: user)
+        }
+    }
     
     init(localVideoView: UIView, opponentVideoView: QBRTCRemoteVideoView, callButton: UIButton, user: QBUUser) {
         self.localVideoView = localVideoView
@@ -31,12 +37,7 @@ class CallViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func call(_ sender: UIButton) {
-        // start call
-        startCall(to: user)
-    }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,19 +45,17 @@ class CallViewController: UIViewController {
         QBRTCClient.instance().add(self as QBRTCClientDelegate)
         QBRTCClient.initializeRTC()
         
-        // View's initialization
+        // View's creation and positioning
         
-        opponentVideoView = QBRTCRemoteVideoView()
         view.addSubview(opponentVideoView)
         
-        localVideoView = UIView()
-        localVideoView.backgroundColor = .cyan
-        opponentVideoView.addSubview(localVideoView)
+        view.addSubview(localVideoView)
         
-        callButton = UIButton()
         callButton.setTitle("Call", for: .normal)
         callButton.setTitleColor(UIColor.white, for: .normal)
         callButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 30)
+        callButton.addTarget(self, action: #selector(makingACall), for: .touchUpInside)
+        
         opponentVideoView.addSubview(callButton)
         
         opponentVideoView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,10 +65,10 @@ class CallViewController: UIViewController {
         opponentVideoView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         
         localVideoView.translatesAutoresizingMaskIntoConstraints = false
-        localVideoView.bottomAnchor.constraint(equalTo: opponentVideoView.bottomAnchor).isActive = true
-        localVideoView.trailingAnchor.constraint(equalTo: opponentVideoView.trailingAnchor).isActive = true
-        localVideoView.widthAnchor.constraint(equalTo: opponentVideoView.widthAnchor, multiplier: 0.4).isActive = true
-        localVideoView.heightAnchor.constraint(equalTo: opponentVideoView.heightAnchor, multiplier: 0.3).isActive = true
+        localVideoView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        localVideoView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        localVideoView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4).isActive = true
+        localVideoView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3).isActive = true
         
         callButton.translatesAutoresizingMaskIntoConstraints = false
         callButton.leadingAnchor.constraint(equalTo: opponentVideoView.leadingAnchor).isActive = true
@@ -77,6 +76,9 @@ class CallViewController: UIViewController {
         callButton.widthAnchor.constraint(equalTo: opponentVideoView.widthAnchor, multiplier: 0.4).isActive = true
         callButton.heightAnchor.constraint(equalTo: opponentVideoView.heightAnchor, multiplier: 0.2).isActive = true
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         let videoFormat = QBRTCVideoFormat()
         videoFormat.frameRate = 30
         videoFormat.pixelFormat = .format420f
@@ -103,6 +105,10 @@ class CallViewController: UIViewController {
         self.videoCapture?.startSession()
         
         self.localVideoView.layer.insertSublayer(self.videoCapture!.previewLayer, at: 0)
+    }
+    
+    @objc func makingACall() {
+        isCalling = true
     }
     
     func startCall(to user: QBUUser) {
@@ -196,14 +202,14 @@ extension CallViewController: QBRTCClientDelegate {
     }
     
     func session(_ session: QBRTCBaseSession, receivedRemoteVideoTrack videoTrack: QBRTCVideoTrack, fromUser userID: NSNumber) {
-        print("Receiving video track from opponent \(userID)...")
+        
         // we suppose you have created UIView and set it's class to RemoteVideoView class
         // also we suggest you to set view mode to UIViewContentModeScaleAspectFit or
         // UIViewContentModeScaleAspectFill
         
-        let remoteVideoTrack = self.session?.remoteVideoTrack(withUserID: userID) // video track for remote user
-        
-        self.opponentVideoView.setVideoTrack(remoteVideoTrack!)
+        guard let remoteVideoTrack = self.session?.remoteVideoTrack(withUserID: userID) else { return } // video track for remote user
+        print("Receiving video track from opponent \(userID)...")
+        self.opponentVideoView.setVideoTrack(remoteVideoTrack)
     }
     
     func session(_ session: QBRTCBaseSession, connectionClosedForUser userID: NSNumber) {
