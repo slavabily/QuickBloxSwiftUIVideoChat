@@ -1,5 +1,5 @@
 //
-//  StreamingViewRepresentable.swift
+//  CallViewRepresentable.swift
 //  QuickBloxSwiftUIVideoChat
 //
 //  Created by slava bily on 20.09.2021.
@@ -19,7 +19,7 @@ struct CallViewRepresentable: UIViewControllerRepresentable {
                                         opponentVideoView: QBRTCRemoteVideoView(),
                                         callButton: UIButton(),
                                         user: opponent)
-        
+
         return callVC
     }
     

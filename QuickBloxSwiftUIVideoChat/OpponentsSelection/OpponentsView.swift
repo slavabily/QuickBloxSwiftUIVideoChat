@@ -39,7 +39,7 @@ struct OpponentsView: View {
     
     var body: some View {
         List(users_, id: \.self) { user in
-            NavigationLink(destination: CallViewRepresentable(opponent: user)) {
+            NavigationLink(destination: CallViewRepresentable(opponent: user).navigationTitle("Chat with \(user.login ?? "Unknown")")) {
                 UserCell(usersSelection: usersSelection, user: user)
             }
         }
